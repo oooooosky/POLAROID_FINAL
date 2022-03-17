@@ -53,7 +53,7 @@
                 <input class="header_user_toggle_btn fs_14" type="button" value="마이페이지" onclick="location.href='/member/mypage'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="SNS" onclick="location.href='/board/'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="결제리스트" onclick="location.href='/goods/payList'"/>
-                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
+                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:if="${member.memberRole == 'ROLE_SELLER'}" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
                 <button type="button" class="header_user_toggle_btn fs_14" id="show" data-bs-toggle="modal" data-bs-target="#exampleModal">로그아웃</button>
             </div>
         </div>
@@ -84,7 +84,11 @@
         <div class="board_detail_box">
             <div class="board_detail_top vertical_box">
                 <div class="vertical_mid board_detail_user">
-                    <img class="board_detail_user_img" src="/image/user_default.png"/>
+                    <a th:href="@{|/memberDetail/${board.memberId}|}">
+                        <div class="board_detail_user_img_box">
+                            <img class="board_detail_user_img" th:src="@{|/profile/${board.memberFilename}|}"/>
+                        </div>
+                    </a>
                     <!--                    <img class="board_detail_user_img" src="/image/user_default.png" th:if="${board.memberFilename == null}"/>-->
                 </div>
                 <div class="vertical_mid">

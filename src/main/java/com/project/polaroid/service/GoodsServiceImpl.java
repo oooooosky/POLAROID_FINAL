@@ -53,6 +53,7 @@ public class GoodsServiceImpl implements GoodsService {
                         goods.getGoodsStock(),
                         goods.getCreateTime(),
                         goods.getUpdateTime(),
+                        goods.getGoodsWriter().getMemberFilename(),
                         GoodsPhotoDetailDTO.toGoodsPhotoDetailDTOList(goods.getGoodsPhotoEntity()))
         );
         return goodsList;
@@ -125,8 +126,9 @@ public class GoodsServiceImpl implements GoodsService {
                             goods.getGoodsStock(),
                             goods.getCreateTime(),
                             goods.getUpdateTime(),
+                            goods.getGoodsWriter().getMemberFilename(),
                             GoodsPhotoDetailDTO.toGoodsPhotoDetailDTOList(goods.getGoodsPhotoEntity()))
-            );
+                    );
             return goodsList;
         } else {
             Page<GoodsEntity> goodsEntities =  gr.searchWriter(goodsSearchDTO.getSearch(), PageRequest.of(pageable.getPageNumber() - 1, PagingConstGoods.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")));
@@ -143,6 +145,7 @@ public class GoodsServiceImpl implements GoodsService {
                             goods.getGoodsStock(),
                             goods.getCreateTime(),
                             goods.getUpdateTime(),
+                            goods.getGoodsWriter().getMemberFilename(),
                             GoodsPhotoDetailDTO.toGoodsPhotoDetailDTOList(goods.getGoodsPhotoEntity()))
 
             );
@@ -280,6 +283,7 @@ public class GoodsServiceImpl implements GoodsService {
                         goods.getGoodsStock(),
                         goods.getCreateTime(),
                         goods.getUpdateTime(),
+                        goods.getGoodsWriter().getMemberFilename(),
                         GoodsPhotoDetailDTO.toGoodsPhotoDetailDTOList(goods.getGoodsPhotoEntity()))
 
         );

@@ -34,7 +34,7 @@
                     <button type="submit"> <img class="header_search_btn_img" src="/image/search.png"/> </button>
                 </div>
             </form>
-        </div>
+            </div>
         <div class="header_right vertical_mid" >
             <div class="dis_flex header_right_box" th:if="${session['LoginEmail']} != null">
                 <!-- 채팅 -->
@@ -57,7 +57,7 @@
                 <input class="header_user_toggle_btn fs_14" type="button" value="마이페이지" onclick="location.href='/member/mypage'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="SNS" onclick="location.href='/board/'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="결제리스트" onclick="location.href='/goods/payList'"/>
-                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
+                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:if="${member.memberRole == 'ROLE_SELLER'}" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
                 <button type="button" class="header_user_toggle_btn fs_14" id="show" data-bs-toggle="modal" data-bs-target="#exampleModal">로그아웃</button>
             </div>
         </div>
@@ -101,6 +101,13 @@
         <!--            </div>-->
         <!--        </form>-->
         <form action="/goods/save" name="wow1" method="post" enctype="multipart/form-data">
+            <div class="memberUpdate_box_2 text_center mb_20">
+                <label class="shop_image_button" for="avatars">
+                    +
+                </label>
+                <input type="file" id="avatars" style="display: none;" name="goodsFile" multiple="multiple" accept="image/*" />
+            </div>
+            <p class="text_center" id="fileOut"></p>
             <div class="input_box">
                 <p class="input_label fs_14">작성자</p>
                 <input th:value="${member.memberNickname}" class="input_text_5 fs_14" type="text" placeholder="작성자" readonly>
@@ -122,10 +129,10 @@
                 <p class="input_label fs_14">재고</p>
                 <input class="input_text_5 fs_14" type="text" id="goodsStock" name="goodsStock">
             </div>
-            <div class="input_box">
-                <p class="input_label fs_14">상품 이미지</p>
-                <input class="ml_5 shop_save_input_file" type="file" id="avatars" name="goodsFile" value="상품내용파일" multiple="multiple" accept="image/*"/>
-            </div>
+<!--            <div class="input_box">-->
+<!--                <p class="input_label fs_14">상품 이미지</p>-->
+<!--                <input class="ml_5 shop_save_input_file" type="file" id="avatars" name="goodsFile" value="상품내용파일" multiple="multiple" accept="image/*"/>-->
+<!--            </div>-->
             <div class="input_box_2">
                 <p class="input_label fs_14">상품 정보</p>
                 <textarea class="input_text_6" name="goodsInFor" id="goodsInFor" placeholder="상품정보를 입력하세요"></textarea>
@@ -179,13 +186,14 @@
     input.addEventListener('change', (e) => {
         // Retrieve all files
         const files = input.files;
-
+        const output=document.getElementById('fileOut');
         // Check files count
         if (files.length > 5) {
             check.innerHTML = ""
             alert(`5개 이하로 올려주세요.`);
             return;
         } else {
+            output.innerText="파일" +files.length + "개";
             check.innerHTML = ""
         }
 

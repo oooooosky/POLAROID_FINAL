@@ -25,6 +25,11 @@
     }
 
 </script>
+<style>
+    body {
+        background-color: #f9f6f8;
+    }
+</style>
 <body>
 <!-- header -->
 <div class="header">
@@ -96,7 +101,9 @@
                 <div class="dis_flex">
                     <!-- 1. user(img, name) -->
                     <div class="my_page_top_1">
-                        <img class="my_page_top_1_user_img" th:src="@{|/profile/${member.memberFilename}|}" />
+                        <div class="my_page_top_1_user_img_box">
+                            <img class="my_page_top_1_user_img" th:src="@{|/profile/${member.memberFilename}|}" />
+                        </div>
                         <div class="my_page_top_1_user_box">
                             <span class="my_page_top_1_user_name" th:text="${member.memberNickname}"></span>
                             <!-- 판매자 표시 시작 -->
@@ -154,13 +161,13 @@
                             </a>
                         </td>
                         <td class="main_board" th:if="${boardCount %3==1}">
-                            <img class="main_board_img" src='/image/dummy_img.png' />
+                            <img  src='/image/dummy_img.png' />
                         </td>
                         <td class="main_board" th:if="${boardCount %3==1}">
-                            <img class="main_board_img" src='/image/dummy_img.png' />
+                            <img  src='/image/dummy_img.png' />
                         </td>
                         <td class="main_board" th:if="${boardCount %3==2}">
-                            <img class="main_board_img" src='/image/dummy_img.png' />
+                            <img  src='/image/dummy_img.png' />
                         </td>
                     </tr>
                 </table>
@@ -173,12 +180,14 @@
                     <p class="my_page_bottom_list_title">팔로워</p>
                 </div>
                 <div class="my_page_bottom_list_contents_box vertical_box" th:each="followerList: ${followerList}">
-                    <th:block th:each="followerList: ${followerList}">
-                        <img class="my_page_bottom_list_contents_img vertical_mid" th:src="@{|/profile/${followerList.followMy.memberFilename}|}"  />
+<!--                    <th:block th:each="followerList: ${followerList}">-->
+                        <a th:href="@{|/memberDetail/${followerList.followMy.id}|}">
+                            <img class="my_page_bottom_list_contents_img vertical_mid" th:src="@{|/profile/${followerList.followMy.memberFilename}|}"  />
+                        </a>
                         <lable class="my_page_bottom_list_contents_name fs_16 vertical_mid">
                             <p th:text="${followerList.followMy.memberNickname}"></p>
                         </lable>
-                    </th:block>
+<!--                    </th:block>-->
                 </div>
             </div>
             <!-- 팔로워 리스트 -->
@@ -188,13 +197,15 @@
                 <div class="my_page_bottom_list_title_box">
                     <p class="my_page_bottom_list_title">팔로잉</p>
                 </div>
-                <div class="my_page_bottom_list_contents_box vertical_box">
-                    <th:block th:each="followingList: ${followingList}">
-                        <img class="my_page_bottom_list_contents_img vertical_mid" th:src="@{|/profile/${followingList.followYour.memberFilename}|}" />
+                <div class="my_page_bottom_list_contents_box vertical_box" th:each="followingList: ${followingList}">
+<!--                    <th:block th:each="followingList: ${followingList}">-->
+                        <a th:href="@{|/memberDetail/${followingList.followYour.id}|}">
+                            <img class="my_page_bottom_list_contents_img vertical_mid" th:src="@{|/profile/${followingList.followYour.memberFilename}|}" />
+                        </a>
                         <lable class="my_page_bottom_list_contents_name fs_16 vertical_mid">
                             <p th:text="${followingList.followYour.memberNickname}"></p>
                         </lable>
-                    </th:block>
+<!--                    </th:block>-->
                 </div>
             </div>
             <!-- 팔로잉 리스트 -->
@@ -208,19 +219,19 @@
                                 <img class="main_board_img" th:src="@{|/upload/${like.getPhoto().get(0).getBoardFilename()}|}"/>
                             </a>
                         </td>
-                        <td class="main_board" th:if="${likeList.size() %3==1}">
+                        <td class="main_board" th:if="${likeList.size() %3}==1">
                             <a>
-                                <img class="main_board_img" src='/image/dummy_img.png'/>
+                                <img  src='/image/dummy_img.png'/>
                             </a>
                         </td>
-                        <td class="main_board" th:if="${likeList.size() %3==1}">
+                        <td class="main_board" th:if="${likeList.size() %3}==1">
                             <a>
-                                <img class="main_board_img" src='/image/dummy_img.png'/>
+                                <img  src='/image/dummy_img.png'/>
                             </a>
                         </td>
-                        <td class="main_board" th:if="${likeList.size() %3==1}">
+                        <td class="main_board" th:if="${likeList.size() %3}==2">
                             <a>
-                                <img class="main_board_img" src='/image/dummy_img.png'/>
+                                <img  src='/image/dummy_img.png'/>
                             </a>
                         </td>
                     </tr>
@@ -237,19 +248,19 @@
                                 <img class="main_board_img" th:src="@{|/goodsFile/${pick.getGoodsPhoto().get(0).getGoodsFilename()}|}"/>
                             </a>
                         </td>
-                        <td class="main_board" th:if="${pickList.size() %3==1}">
+                        <td class="main_board" th:if="${pickList.size() %3}==1">
                             <a>
-                                <img class="main_board_img" src='/image/dummy_img.png'/>
+                                <img  src='/image/dummy_img.png'/>
                             </a>
                         </td>
-                        <td class="main_board" th:if="${pickList.size() %3==1}">
+                        <td class="main_board" th:if="${pickList.size() %3}==1">
                             <a>
-                                <img class="main_board_img" src='/image/dummy_img.png'/>
+                                <img src='/image/dummy_img.png'/>
                             </a>
                         </td>
-                        <td class="main_board" th:if="${pickList.size() %3==2}">
+                        <td class="main_board" th:if="${pickList.size() %3}==2">
                             <a>
-                                <img class="main_board_img" src='/image/dummy_img.png'/>
+                                <img  src='/image/dummy_img.png'/>
                             </a>
                         </td>
                     </tr>

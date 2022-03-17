@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,7 @@ public class IndexController {
     private final MemberController memberController;
     private final BoardService boardService;
     private final GoodsService goodsService;
+    private final ChatRoomController chatRoomController;
 
     // 시작 페이지
     @GetMapping({"","/"})
@@ -161,6 +163,7 @@ public class IndexController {
 
     // 멤버 상세페이지 (팔로워 수, 내 정보)
     @GetMapping("/memberDetail/{memberId}")
+    @PreAuthorize("hasRole('ROLE_MEMBER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SELLER')" )
     public String mypageForm(@PathVariable Long memberId,
                              HttpSession session, Model model){
 
@@ -214,6 +217,8 @@ public class IndexController {
             List<GoodsDetailDTO> pickList = goodsService.pickList(memberId);
             model.addAttribute("pickList", pickList);
 
+            Long chatId = chatRoomController.newChat(memberService.findById(myId).getMemberNickname(), member.getMemberNickname());
+            model.addAttribute("chatId",chatId);
 
             int check = followService.followCheck(myId, memberId);
             if (check == 0) {

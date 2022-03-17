@@ -56,7 +56,7 @@
                 <input class="header_user_toggle_btn fs_14" type="button" value="마이페이지" onclick="location.href='/member/mypage'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="SNS" onclick="location.href='/board/'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="결제리스트" onclick="location.href='/goods/payList'"/>
-                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
+                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:if="${member.memberRole == 'ROLE_SELLER'}" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
                 <button type="button" class="header_user_toggle_btn fs_14" id="show" data-bs-toggle="modal" data-bs-target="#exampleModal">로그아웃</button>
             </div>
         </div>
@@ -80,16 +80,6 @@
 <!-- 로그아웃 모달창 -->
 
 <!-- header -->
-
-<!--<input type="text" id="goodsId" th:value="${goods.goodsId}"><br>-->
-<!--<input type="text" id="memberId" th:value="${goods.memberId}"><br>-->
-<!--제목: <input type="text" id="goodsTitle" th:value="${goods.goodsTitle}" placeholder="제목"><br>-->
-<!--내용: <input type="text" id="goodsContents" th:value="${goods.goodsContents}" placeholder="내용"><br>-->
-<!--가격: <input type="text" id="goodsPrice" th:value="${goods.goodsPrice}" placeholder="가격"><br>-->
-<!--재고: <input type="text" id="goodsStock" th:value="${goods.goodsStock}" placeholder="재고"><br>-->
-
-<!--<button onclick="goodsUpdate()">수정</button>-->
-
 <div class="contents" style="background-color: #fff;">
     <div class="max_box pt_60">
         <div class="shop_save_title_box">

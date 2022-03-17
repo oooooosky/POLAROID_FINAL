@@ -131,8 +131,11 @@ public class GoodsController {
 
     // 굿즈보드 작성
     @PostMapping("save")
-    public String save(@ModelAttribute GoodsSaveDTO goodsSaveDTO) throws IOException {
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SELLER')" )
+    public String save(@ModelAttribute GoodsSaveDTO goodsSaveDTO, HttpSession session, Model model) throws IOException {
         Long goodsId = gs.save(goodsSaveDTO);
+        Long memberId = (Long) session.getAttribute("LoginNumber");
+        model.addAttribute("member",ms.findById(memberId));
         for (MultipartFile g: goodsSaveDTO.getGoodsFile()) {
             gs.saveFile(goodsId, g);
         }

@@ -23,42 +23,44 @@
 <div class="header">
     <div class="max_box_2 vertical_box">
         <div class="header_logo vertical_mid">
-            <img class="header_logo_img" src="/image/logo_white.png" onclick="location.href='/board/'" />
+            <img class="header_logo_img" src="/image/logo_white.png" onclick="location.href='/'" />
         </div>
         <div class="header_search_box vertical_mid">
-            <!--            <input class="header_search_input fs_16" id="keyword" type="text" placeholder="Search" />-->
-            <!--            <div class="header_search_btn">-->
-            <!--                <button onclick="tagSearch()">-->
-            <!--                    <img class="header_search_btn_img" src="/image/search.png"/>-->
-            <!--                </button>-->
-            <!--            </div>-->
+            <input class="header_search_input fs_16" id="keyword" type="text" placeholder="Search" />
+            <div class="header_search_btn">
+                <button onclick="tagSearch()">
+                    <img class="header_search_btn_img" src="/image/search.png"/>
+                </button>
+            </div>
         </div>
-        <div class="header_right vertical_mid">
-            <!-- 채팅 -->
-            <div class="header_chat">
-                <img class="header_chat_img" src="/image/chat.png" />
-            </div>
-            <!-- 좋아요 모아보기 -->
-            <div class="header_like">
-                <img class="header_like_img" src="/image/like.png" />
-            </div>
-            <!-- 사용자 정보 -->
-            <div class="header_user" id="userToggleButton">
-                <img class="header_user_img" src="/image/user_default.png" />
+        <div class="header_right vertical_mid" >
+            <div class="dis_flex header_right_box" th:if="${session['LoginEmail']} != null">
+                <!-- 채팅 -->
+                <div class="header_chat_box flex-grow-1">
+                    <div class="header_chat ">
+                        <img class="far fa-envelope icon-badge-icon header_chat_img" src="/image/chat.png" onclick="location.href='/chat'"/>
+                        <div class="icon-badge" th:if="${member.memberMessage>0}"><p th:text="${member.memberMessage}"> </p></div>
+                    </div>
+                </div>
+                <!-- 좋아요 모아보기 -->
+                <div class="header_like flex-grow-1">
+                    <img class="header_like_img" src="/image/like.png" onclick="location.href='/member/likeListShow'"/>
+                </div>
+                <!-- 사용자 정보 -->
+                <div class="header_user flex-grow-1" id="userToggleButton">
+                    <img class="header_user_img" th:src="@{|/profile/${member.memberFilename}|}"/>
+                </div>
             </div>
             <div class="header_user_toggle_box" id="userToggleMenu">
-                <input class="header_user_toggle_btn fs_14" type="button" value="마이페이지" onclick="location.href='/mypage'" />
+                <input class="header_user_toggle_btn fs_14" type="button" value="마이페이지" onclick="location.href='/member/mypage'"/>
+                <input class="header_user_toggle_btn fs_14" type="button" value="SNS" onclick="location.href='/board/'"/>
+                <input class="header_user_toggle_btn fs_14" type="button" value="결제리스트" onclick="location.href='/goods/payList'"/>
+                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:if="${member.memberRole == 'ROLE_SELLER'}" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
                 <button type="button" class="header_user_toggle_btn fs_14" id="show" data-bs-toggle="modal" data-bs-target="#exampleModal">로그아웃</button>
             </div>
-
         </div>
     </div>
 </div>
-
-<!-- 로그아웃 확인 팝업 -->
-<!-- 해야함 -->
-<!-- 로그아웃 확인 팝업 -->
-<!-- header -->
 
 <!-- 로그아웃 모달창 -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -74,6 +76,9 @@
         </div>
     </div>
 </div>
+<!-- 로그아웃 모달창 -->
+
+<!-- header -->
 
 <div class="contents" style="background-color: #fff;">
     <div class="max_box pt_60">
@@ -85,13 +90,12 @@
             <input type="hidden" id="memberId" th:value="${board.memberId}" readonly>
             <input type="hidden" id="boardId" th:value="${board.boardId}" readonly>
             <div class="input_box">
-                <p class="input_label fs_14">내용</p>
-                <textarea class="input_text_5 fs_14" type="text" id="boardContents" name="boardContents" th:value="${board.boardContents}" placeholder="내용" style="width: 100%; height: 250%;"></textarea>
+<!--                <p class="input_label fs_14">내용</p>-->
+                <textarea class="input_text_5 fs_14 mx-auto" type="text" id="boardContents" name="boardContents" th:text="${board.boardContents}" placeholder="내용을 입력하세요! ex) 즐거운 친구들과 #찐친 #우정사진 #2022" style="width: 70%; height: 250%;"></textarea>
             </div>
             <br><br><br>
-            <div class="input_box">
-                <p class="input_label fs_14">&nbsp;&nbsp;</p>
-                <button class="long_btn signup_btn fs_16 fw_b" style="width: 100%" onclick="boardUpdate()">수정하기</button>
+            <div style="text-align: center">
+                <button class="board_save_btn fs_16 fw_b" style="width: 90%;" onclick="boardUpdate()">수정하기</button>
             </div>
         </div>
     </div>

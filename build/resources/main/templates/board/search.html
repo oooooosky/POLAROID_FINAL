@@ -20,6 +20,11 @@
         document.querySelector("#show").addEventListener('click', show);
         document.querySelector("#close").addEventListener('click', close);
     </script>
+    <style>
+        body {
+            background-color: #f9f6f8;
+        }
+    </style>
     <title>POLAROID</title>
 </head>
 <body>
@@ -59,7 +64,6 @@
                 <input class="header_user_toggle_btn fs_14" type="button" value="마이페이지" onclick="location.href='/member/mypage'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="SNS" onclick="location.href='/board/'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="결제리스트" onclick="location.href='/goods/payList'"/>
-                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
                 <button type="button" class="header_user_toggle_btn fs_14" id="show" data-bs-toggle="modal" data-bs-target="#exampleModal">로그아웃</button>
             </div>
         </div>
@@ -100,6 +104,21 @@
                 <td class="main_board" th:each="board: ${boardList}">
                     <a th:href="@{|/board/${board.boardId}|}">
                         <img class="main_board_img" th:src="@{|/upload/${board.getPhotoList().get(0).getBoardFilename()}|}"/>
+                    </a>
+                </td>
+                <td class="main_board" th:if="${boardList.getTotalElements() %3}==1">
+                    <a>
+                        <img src='/image/dummy_img.png'/>
+                    </a>
+                </td>
+                <td class="main_board" th:if="${boardList.getTotalElements() %3}==1">
+                    <a>
+                        <img src='/image/dummy_img.png'/>
+                    </a>
+                </td>
+                <td class="main_board" th:if="${boardList.getTotalElements() %3}==2">
+                    <a>
+                        <img src='/image/dummy_img.png'/>
                     </a>
                 </td>
             </tr>

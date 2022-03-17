@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
 <!-- header -->
 <div class="header">
     <div class="max_box_2 vertical_box">
@@ -78,12 +77,13 @@
 <!-- header -->
 
 
+
 <div class="contents" style="background-color: #fff !important;">
     <div class="max_box_3 pt_60">
         <div class="memberDelete_box">
             <div class="vertical_box">
                 <img class="memberDelete_profile vertical_mid" th:src="@{|/profile/${member.memberFilename}|}" alt="">
-                <p class="memberDelete_text vertical_mid" th:text="${member.memberNickname}"> 님 회원 탈퇴하시겠습니까? </p>
+                <p class="memberDelete_text vertical_mid" th:text="${member.memberNickname}+ '님 회원 탈퇴하시겠습니까?'"></p>
             </div>
             <div class="memberDelete_check_box">
                 <span class="memberDelete_check_text">

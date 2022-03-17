@@ -26,25 +26,6 @@
     </script>
 
 </head>
-<!--<style>-->
-<!--    .img-wrapper {-->
-<!--        /*width: 100%;*/-->
-<!--        /*height: 400px;*/-->
-<!--        /*overflow: hidden;*/-->
-<!--        width: 600px;-->
-<!--        height:600px;-->
-<!--        margin: 0 auto;-->
-<!--        overflow:hidden;-->
-<!--        position:relative;-->
-
-<!--    }-->
-<!--    .imgFile {-->
-<!--        width: 100%;-->
-<!--        height: 100%;-->
-<!--        object-fit:cover;-->
-<!--        /*object-fit: contain;*/-->
-<!--    }-->
-<!--</style>-->
 <body>
 <!-- header -->
 <div class="header">
@@ -86,7 +67,7 @@
                 <input class="header_user_toggle_btn fs_14" type="button" value="마이페이지" onclick="location.href='/member/mypage'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="SNS" onclick="location.href='/board/'"/>
                 <input class="header_user_toggle_btn fs_14" type="button" value="결제리스트" onclick="location.href='/goods/payList'"/>
-                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
+                <input class="header_user_toggle_btn fs_14" type="button" value="내 쇼핑몰" th:if="${member.memberRole == 'ROLE_SELLER'}" th:onclick="'location.href=\''+ @{|/goods/list/${session.LoginNumber}|} + '\''"/>
                 <button type="button" class="header_user_toggle_btn fs_14" id="show" data-bs-toggle="modal" data-bs-target="#exampleModal">로그아웃</button>
             </div>
         </div>
@@ -167,9 +148,9 @@
             </div>
     </div>
 
-    <br><hr>
+    <br><hr class="mx-auto" style="width: 70%;">
 
-    <div class="card text-center">
+    <div class="card text-center mx-auto" style="width: 60%">
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -187,19 +168,19 @@
                     <div class="title_bottom_line2 mb-5"></div>
                     <div class="input_box_3">
                         <p class="input_label">상품 이름</p>
-                        <input class="input_text_5" type="text" th:value="${goods.goodsTitle}" readonly>
+                        <input class="input_text_5 mr_30" type="text" th:value="${goods.goodsTitle}" style="width: 60%" readonly>
                     </div>
                     <div class="input_box_2">
                         <p class="input_label">상세 설명</p>
-                        <textarea class="input_text_7" th:text="${goods.goodsInFor}" readonly></textarea>
+                        <textarea class="input_text_7 mr_30" th:text="${goods.goodsInFor}" style="width: 60%" readonly></textarea>
                     </div>
                     <div class="input_box_3">
                     <p class="input_label">가격</p>
-                    <input class="input_text_5" type="text" th:value="${goods.goodsPrice}+원" readonly/>
+                    <input class="input_text_5 mr_30" type="text" th:value="${goods.goodsPrice}+원" style="width: 60%" readonly/>
                     </div>
                     <div class="input_box_3 mb-5">
                         <p class="input_label">수량</p>
-                        <input class="input_text_8" type="text" th:value="${goods.goodsStock}" readonly />
+                        <input class="input_text_8 mr_30" type="text" th:value="${goods.goodsStock}" style="width: 30%" readonly />
                     </div>
             </div>
 <!--                </div>-->
@@ -295,39 +276,12 @@
             <img class="up_btn_img" src="/image/up_btn.png" />
         </div>
 
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content p_30 bg_ef">
-                    <div class="modal-body fs_16 text_center fw_b">
-                        정말로 게시글을 삭제하시겠습니까?
-                    </div>
-                    <div class="modal-footer border_none modal_btn_box">
-                        <button type="button" class="btn btn-secondary flex-grow-1 bg_ccc logout_modal_btn logout_modal_btn_cancel" data-bs-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary flex-grow-1 bg_524A4E logout_modal_btn logout_modal_btn_okay" th:onclick="goodsDelete([[${goods.goodsId}]])">삭제하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div th:if="${session.LoginRole.equals('ROLE_ADMIN')}">
-            <div class="up_btn" data-bs-toggle="modal" data-bs-target="#adminDeleteModal">
-                <img class="update_btn_img" src="/image/red-x.svg">
+            <div class="admin_delete_btn" data-bs-toggle="modal" data-bs-target="#adminDeleteModal">
+                <img class="admin_delete_btn_img" src="/image/red-x.svg">
             </div>
         </div>
 
-        <div class="modal fade" id="adminDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content p_30 bg_ef">
-                    <div class="modal-body fs_16 text_center fw_b">
-                        정말로 게시글을 삭제하시겠습니까?
-                    </div>
-                    <div class="modal-footer border_none modal_btn_box">
-                        <button type="button" class="btn btn-secondary flex-grow-1 bg_ccc logout_modal_btn logout_modal_btn_cancel" data-bs-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary flex-grow-1 bg_524A4E logout_modal_btn logout_modal_btn_okay" th:onclick="adminGoodsDelete([[${goods.goodsId}]])">삭제하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 <!--        <div th:if="${session.LoginRole.equals('ROLE_ADMIN')}">-->
 <!--            <div class="admin_delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">-->
